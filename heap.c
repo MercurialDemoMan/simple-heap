@@ -108,7 +108,7 @@ static u64 __dataseg_sub(u64 size)
 /* ------------------------------ */
 
 /**
- * \brief place heap at specific address
+ * \brief place heap at the beggining of the data segment
  */
 void  heap_init()
 {
