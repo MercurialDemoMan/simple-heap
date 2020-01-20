@@ -52,6 +52,6 @@ DEALLOCATION:
 	Merging free nodes:
 		                                    free this
 		                                        |
-	                                            V
+		                                        V
 		Heap Before: |Node||..free..||Node||....data....||Node||..free..||Node||.........data.........|
 		Heap After:  |Node||....................free....................||Node||.........data.........|

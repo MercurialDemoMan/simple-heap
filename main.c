@@ -11,13 +11,17 @@ int main(int argc, char* argv[])
 	heap_init();
 
 	void* a = heap_alloc(333);
+	void* b = heap_alloc(1);
 
 	heap_print();
 	printf("----\n");
 
-	heap_free(a);
+	heap_free(b);
 
-	a = heap_alloc(1);
+	heap_print();
+	printf("----\n");
+
+	void* c = heap_alloc(555);
 
 	heap_print();
 	printf("----\n");
