@@ -112,6 +112,10 @@ static u64 __dataseg_sub(u64 size)
  */
 void  heap_init()
 {
+	if(__heap.init == true)
+	{
+		printf("heap_init() error: cannot double initialize heap\n"); return;
+	}
 	__heap.start = __dataseg_curr();
 	__heap.first = NULL;
 	__heap.init  = true;
@@ -161,7 +165,7 @@ void* heap_alloc(u64 size)
 	node = __heap.first;
 	while(true)
 	{
-		//if the node is not used and it's size is acceptable
+		//if the node is not used and it's size is big enough
 		//occupy this node
 		if(node->used == false && (size <= node->size))
 		{
@@ -179,7 +183,10 @@ void* heap_alloc(u64 size)
 				node->sign      = HNODE_SIGN;
 				new->used       = false;
 				new->next       = node->next;
-				new->next->prev = new;
+				if(new->next != NULL)
+				{
+					new->next->prev = new;
+				}
 				new->prev       = node;
 				node->next      = new;
 			}
@@ -263,7 +270,7 @@ void* heap_realloc(void* data, u64 size)
 	//get the node address
 	hnode_t* node = (hnode_t*)((u64)data - sizeof(hnode_t));
 
-	//checo for node signature
+	//check for node signature
 	if(node->sign != HNODE_SIGN)
 	{
 		printf("heap_realloc() error: corrupted heap"); return NULL;
@@ -363,6 +370,12 @@ void  heap_free(void* data)
 	if(node->sign != HNODE_SIGN)
 	{
 		printf("heap_free() error: corrupted heap\n"); return;
+	}
+
+	//check for node usage
+	if(node->used == false)
+	{
+		printf("heap_free() error: trying to free already freed node\n"); return;
 	}
 
 	//node is no longer in use
