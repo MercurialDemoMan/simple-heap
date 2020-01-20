@@ -1,7 +1,6 @@
 #include <stdint.h>
 
 typedef uint64_t u64;
-typedef int64_t  i64;
 
 /**
  * \brief place heap at the beggining of the data segment
