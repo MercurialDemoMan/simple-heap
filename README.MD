@@ -12,6 +12,7 @@ HEAP:
 
 	Each node has size and usage flag
 	User data is right after the node, meaning that the node is kind of a header to the user allocated space
+	
 	Note: This has potential of user overwriting nodes which can lead to corrupted heap
 	
 HEAP DATA SEGMENT:
